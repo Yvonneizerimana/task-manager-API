@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import router from "./routes/taskRoute.js";
 import notFound from "./middleware/routesMiddleware.js";
-
+import errorHandler from "./middleware/errorHandler.js";
 const app = express();
 dotenv.config();
 app.use(express.json());
@@ -14,6 +14,7 @@ mongoose.connect(url)
     console.log("Database connected successfully");
     app.use("/api/taskManager", router);
     app.use(notFound);
+    app.use(errorHandler);
     const port = process.env.PORT;
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
